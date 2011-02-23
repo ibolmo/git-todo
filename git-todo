@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# todo(ibolmo): Allow // # or drop the prefix (for multiline comments)
+# todo(ibolmo): Use $USER or argument for the user
+# todo(ibolmo): Pass argument to narrow search
+
+grep -Ri '#[ \t]*todo.*olmo' *
