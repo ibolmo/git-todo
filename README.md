@@ -26,8 +26,8 @@ Usage
 	cd ../
 	git-todo
 	# should output something similar
-	#	 > git-todo/git-todo:# todo(ibolmo): Allow // # or drop the prefix (for multiline comments)
-  #  > git-todo/git-todo:# todo(ibolmo): Use $USER or argument for the user
+	#  > git-todo/git-todo:# todo(ibolmo): Allow // # or drop the prefix (for multiline comments)
+	#  > git-todo/git-todo:# todo(ibolmo): Use $USER or argument for the user
 	#  > git-todo/git-todo:# todo(ibolmo): Pass argument to narrow search
 
 	
