@@ -4,4 +4,5 @@
 # todo(ibolmo): Use $USER or argument for the user
 # todo(ibolmo): Pass argument to narrow search
 
-grep -Ri '#[ \t]*todo.*olmo' *
+grep -RiP '#[ \t]*todo.*olmo' *
+
