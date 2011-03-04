@@ -3,6 +3,6 @@
 # todo(ibolmo): Allow // # or drop the prefix (for multiline comments)
 # todo(ibolmo): Use $USER or argument for the user
 # todo(ibolmo): Pass argument to narrow search
+# todo(ibolmo): Allow regexp passed through args for file search
 
-grep -RiP '#[ \t]*todo.*olmo' *
-
+find -E . -regex '.*(php|yml)'  -exec awk '/#[ \t]*todo.*olmo/ { sub(/^[ \t]*/, ""); printf "%s\034%s\n", FILENAME, $0}' {} +|column -s $'\034' -t
