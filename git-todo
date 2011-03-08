@@ -5,4 +5,4 @@
 # todo(ibolmo): Pass argument to narrow search
 # todo(ibolmo): Allow regexp passed through args for file search
 
-find -E . -regex '.*(php|yml)'  -exec awk '/#[ \t]*todo.*olmo/ { sub(/^[ \t]*/, ""); printf "%s\034%s\n", FILENAME, $0}' {} +|column -s $'\034' -t
+find -E . -regex '.*(php|yml)'  -exec awk '/#[ \t]*todo.*olmo/ { sub(/^[^#]*/, ""); printf "%s\034%s\n", FILENAME, $0}' {} +|column -s $'\034' -t
