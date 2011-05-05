@@ -7,7 +7,7 @@ Installation
 ------------
 
 	git clone https://github.com/ibolmo/git-todo.git
-	ln -s ~/bin/git-todo $(pwd)/git-todo/git-todo
+	ln -s $(pwd)/git-todo/git-todo ~/bin/git-todo 
 	chmod +x git-todo/git-todo
 	
 Usage
