@@ -1,8 +1,146 @@
-#!/bin/sh
+#!/usr/bin/env node
 
-# todo(ibolmo): Allow // # or drop the prefix (for multiline comments)
-# todo(ibolmo): Use $USER or argument for the user
-# todo(ibolmo): Pass argument to narrow search
-# todo(ibolmo): Allow regexp passed through args for file search
+// todo(ibolmo, 0.1): Nesting limit
+// todo(ibolmo, 0.1): Line numbers
 
-find -E . -regex '.*(php|yml)'  -exec awk '/#[ \t]*todo.*olmo/ { sub(/^[^#]*/, ""); printf "%s\034%s\n", FILENAME, $0}' {} +|column -s $'\034' -t
+fs = require('./utils/graceful-fs.js');
+events = require('events');
+vm = require('vm');
+
+argv = process.argv.slice(2);
+path = '.';
+
+PROFILE = false;
+IGNORED_REGEX = /^(log|im(age)?|cache)s?|\.(git|gif|jpg|png|jar)/;
+TODO_REGEX = /(?:\/\/|#|\/\*\s*) *todo\(([^\)]*)\):(.*)/ig;
+DELIMITER = ',';
+
+maximums = {
+	file: 0,
+	by: 0,
+	milestone: 0,
+	todo: 0
+};
+
+emitter = new events.EventEmitter();
+
+emitter.on('file', function(file){
+	fs.readFile(file, 'ascii', function(err, content){
+
+		if (err) throw err;
+
+		content.replace(TODO_REGEX, function(matched, by, todo){
+			var bits = by.split(DELIMITER);
+			by = bits[0];
+			var milestone = bits[1] || '';
+			
+			by = by.trim();
+			milestone = milestone.trim();
+			todo = todo.trim();
+			
+			maximums.file = Math.max(file.length, maximums.file);
+			maximums.by = Math.max(by.length, maximums.by);
+			maximums.milestone = Math.max(milestone.length, maximums.milestone);
+			maximums.todo = Math.max(todo.length, maximums.todo);
+			
+			emitter.emit('todo', file, by, milestone, todo);
+		});
+
+	});
+});
+
+todos = {};
+
+emitter.on('todo', function(file, by, milestone, todo){
+	if (!todos[milestone]) todos[milestone] = [];
+	todos[milestone].push([file, by, todo]);
+});
+
+process.on('exit', function(){
+
+	var milestones = [];
+	for (var milestone in todos) if (milestone) milestones.push(milestone);
+
+	milestones.sort(function(milestoneA, milestoneB){
+	
+		var diff = milestoneB.length - milestoneA.length;
+		if (diff > 1) milestoneA += Array(diff).join('.0');
+		if (diff < 1) milestoneB += Array(-diff).join('.0');
+	
+		var nums = milestoneA.split('');
+		for (var num, i = 0, l = nums.length; i < l; i++){
+			num = nums[i];
+			if (num == '.' || num == milestoneB[i]) continue;
+			return num < milestoneB[i];
+		}
+	
+	});
+
+	milestones.unshift('');
+
+	milestones.forEach(function(milestone){
+		var entries = todos[milestone];
+		if (milestone) console.log(milestone);
+		if (entries) entries.forEach(function(entry){
+			
+			var diff, file = entry[0], by = entry[1], todo = entry[2];
+			if ((diff = maximums.file - file.length)) file += Array(++diff).join(' ');
+			if ((diff = maximums.by - by.length)) by += Array(++diff).join(' ');
+			if ((diff = maximums.todo - todo.length)) todo += Array(++diff).join(' ');
+			
+			console.error('  %s  %s', todo, file);
+		});
+		console.log('');
+	});
+
+});
+
+function recurse(directory){
+
+	if (PROFILE) console.time(directory);
+	
+	fs.readdir(directory, function(err, files){
+	
+		if (PROFILE) console.timeEnd(directory);
+		
+		if (err) throw err;
+
+		files.forEach(function(file){
+			
+			if (IGNORED_REGEX.test(file)) return;
+			
+			if (PROFILE) console.log(file);
+			
+			var path = directory + '/' + file;
+			
+			fs.stat(path, function(err, stats){
+				
+				if (err) throw err;
+				
+				if (stats.isDirectory()) recurse(path);
+				else emitter.emit('file', path);
+			});
+
+		});
+	
+	});
+
+}
+
+recurse(path);
+
+/* syntax test */
+
+// todo(ibolmo): Don't need to use #
+    //  todo( ibolmo ):  Arbitrary spacing
+// todo(anonymous): Any person
+// TODO(ibolmo): uppercase is fine too
+// # todo(ibolmo): Supports old syntax
+// todo(ibolmo, 1.0): Supports milestones
+// todo(ibolmo, 1.0.1): Reports in correct order (by asc milestone)
+// todo(ibolmo, 1.1): Any minor milestone.
+// todo(ibolmo, 2.0): Any major milestone.
+/*
+	todo(ibolmo): Supports multiline
+*/
+/* todo(ibolmo): Multiline, inlined */
