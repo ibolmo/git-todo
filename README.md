@@ -41,33 +41,33 @@ Usage
 	~/Sources/ > cd git-todo
 	~/Sources/git-todo (master) > cat git-todo  # (notice all the todos?)
 	~/Sources/git-todo (master) > git todo
-	#   Don't need to use #                             ./git-todo 
-	#   Arbitrary spacing                               ./git-todo 
-	#   Any person                                      ./git-todo 
-	#   uppercase is fine too                           ./git-todo 
-	#   Supports old syntax                             ./git-todo 
-	#   Supports multiline                              ./git-todo 
-	#   Multiline, inlined */                           ./git-todo 
-	#   Simple todo.                                    ./README.md
-	# 
-	# 2.0
-	#   Any major milestone.                            ./git-todo 
-	# 
-	# 1.1
-	#   Any minor milestone.                            ./git-todo 
-	# 
-	# 1.0.1
-	#   Reports in correct order (by asc milestone)     ./git-todo 
-	# 
-	# 1.0
-	#   Supports milestones                             ./git-todo 
-	# 
-	# 0.1
-	#   Nesting limit                                   ./git-todo 
-	#   Line numbers                                    ./git-todo 
-	# 
-	# 0.1.0
-	#   Should get this done before this milestone. */  ./README.md
+	  Don't need to use #                             ./git-todo 
+	  Arbitrary spacing                               ./git-todo 
+	  Any person                                      ./git-todo 
+	  uppercase is fine too                           ./git-todo 
+	  Supports old syntax                             ./git-todo 
+	  Supports multiline                              ./git-todo 
+	  Multiline, inlined */                           ./git-todo 
+	  Simple todo.                                    ./README.md
+	
+	2.0
+	  Any major milestone.                            ./git-todo 
+	
+	1.1
+	  Any minor milestone.                            ./git-todo 
+	
+	1.0.1
+	  Reports in correct order (by asc milestone)     ./git-todo 
+	
+	1.0
+	  Supports milestones                             ./git-todo 
+	
+	0.1
+	  Nesting limit                                   ./git-todo 
+	  Line numbers                                    ./git-todo 
+	
+	0.1.0
+	  Should get this done before this milestone. */  ./README.md
 
 F.A.Q's
 -------
