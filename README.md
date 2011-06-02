@@ -49,23 +49,23 @@ Usage
 	#   Supports multiline                              ./git-todo 
 	#   Multiline, inlined */                           ./git-todo 
 	#   Simple todo.                                    ./README.md
-  # 
+	# 
 	# 2.0
 	#   Any major milestone.                            ./git-todo 
-  # 
+	# 
 	# 1.1
 	#   Any minor milestone.                            ./git-todo 
-  # 
+	# 
 	# 1.0.1
 	#   Reports in correct order (by asc milestone)     ./git-todo 
-  # 
+	# 
 	# 1.0
 	#   Supports milestones                             ./git-todo 
-  # 
+	# 
 	# 0.1
 	#   Nesting limit                                   ./git-todo 
 	#   Line numbers                                    ./git-todo 
-  # 
+	# 
 	# 0.1.0
 	#   Should get this done before this milestone. */  ./README.md
 
