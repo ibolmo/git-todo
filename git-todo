@@ -12,7 +12,7 @@ path = '.';
 
 PROFILE = false;
 IGNORED_REGEX = /^(log|im(age)?|cache)s?|\.(git|gif|jpg|png|jar)/;
-TODO_REGEX = /(?:\/\/|#|\/\*\s*) *todo\(([^\)]*)\):(.*)/ig;
+TODO_REGEX = /(?:\/\/|#|\/\*\s*) *todo\ *\(([^\)]*)\):(.*)/ig;
 DELIMITER = ',';
 
 maximums = {
